@@ -2,56 +2,104 @@ const displayInput = document.querySelector("#input");
 const buttons = document.querySelectorAll(".optns button");
 
 let display = "";
+let leftParam;
+let option;
+let rightParam;
 
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
     if (button.innerHTML === "AC") {
       display = "";
+      leftParam = undefined;
+      option = undefined;
+      rightParam = undefined;
       displayInput.value = display;
     } else if (button.innerHTML === "DEL") {
       const displayValue = displayInput.value;
+      const lastLetter = displayValue.slice(-1);
+      if (
+        lastLetter === "/" ||
+        lastLetter === "x" ||
+        lastLetter === "+" ||
+        lastLetter === "-"
+      ) {
+        option = undefined;
+      }
       display = displayValue.slice(0, -1);
       displayInput.value = display;
-    } else if (button.innerHTML === "/") {
-      const divide = displayInput.value.split("/");
-      let total = divide[0];
-      for (let i = 1; i < divide.length; i++) {
-        const num = parseFloat(divide[i]);
-        total /= num;
-      }
-      display = total;
-      displayInput.value = display;
-    } else if (button.innerHTML === "x") {
-      const multiply = displayInput.value.split("x");
-      let total = multiply[0];
-      for (let i = 1; i < multiply.length; i++) {
-        const num = parseFloat(multiply[i]);
-        total *= num;
-      }
-      display = total;
-      displayInput.value = display;
-    } else if (button.innerHTML === "+") {
-      const plus = displayInput.value.split("+");
-      let total = 0;
-      plus.forEach((kartik) => {
-        const num = parseFloat(kartik);
-        total += num;
-      });
-      display = total;
-      displayInput.value = display;
-    } else if (button.innerHTML === "-") {
-      const minus = displayInput.value.split("-");
-      let total = minus[0];
-      for (let i = 1; i < minus.length; i++) {
-        const num = parseFloat(minus[i]);
-        total -= num;
-      }
-      display = total;
+    } else if (button.innerHTML === "=") {
+      display = eval(display);
       displayInput.value = display;
     } else {
-      display += button.innerText;
-      displayInput.value = display;
+      if (button.innerHTML === "/") {
+        if (option) {
+          display = eval(leftParam + option + rightParam);
+          displayInput.value = display;
+          leftParam = display;
+          rightParam = 0;
+          option = undefined;
+        }
+        displayInput.value += button.innerText;
+        const divide = displayInput.value.split("/");
+        option = "/";
+        leftParam = divide[0];
+      } else if (button.innerHTML === "x") {
+        if (option) {
+          display = eval(leftParam + option + rightParam);
+          displayInput.value = display;
+          leftParam = display;
+          rightParam = 0;
+          option = undefined;
+        }
+        displayInput.value += button.innerText;
+        const multiply = displayInput.value.split("x");
+        option = "*";
+        leftParam = multiply[0];
+      } else if (button.innerHTML === "+") {
+        if (option) {
+          display = eval(leftParam + option + rightParam);
+          displayInput.value = display;
+          leftParam = display;
+          rightParam = 0;
+          option = undefined;
+        }
+        displayInput.value += button.innerText;
+        const add = displayInput.value.split("+");
+        option = "+";
+        leftParam = add[0];
+      } else if (button.innerHTML === "-") {
+        if (option) {
+          display = eval(leftParam + option + rightParam);
+          displayInput.value = display;
+          leftParam = display;
+          rightParam = 0;
+          option = undefined;
+        }
+        displayInput.value += button.innerText;
+        const subtract = displayInput.value.split("-");
+        option = "-";
+        leftParam = subtract[0];
+      } else if (button.innerHTML === "%") {
+        if (option) {
+          display = eval(leftParam + option + rightParam);
+          displayInput.value = display;
+          leftParam = display;
+          rightParam = 0;
+          option = undefined;
+        }
+        displayInput.value += button.innerText;
+        const percent = displayInput.value.split("%");
+        option = "%";
+        leftParam = percent[0];
+      } else {
+        displayInput.value += button.innerText;
+        rightParam =
+          displayInput.value.split("/")[1] ||
+          displayInput.value.split("x")[1] ||
+          displayInput.value.split("+")[1] ||
+          displayInput.value.split("-")[1] ||
+          displayInput.value.split("%")[1];
+      }
     }
   });
 });
-`jj`
