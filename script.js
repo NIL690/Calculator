@@ -7,7 +7,6 @@ let option;
 let rightParam;
 
 buttons.forEach((button) => {
-  console.log("")
   button.addEventListener("click", () => {
     if (button.innerHTML === "AC") {
       display = "";
