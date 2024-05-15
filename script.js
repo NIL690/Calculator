@@ -2,17 +2,17 @@ const displayInput = document.querySelector("#input");
 const buttons = document.querySelectorAll(".optns button");
 
 let display = "";
-let temp;
+let leftParam;
 let option;
-let temp2;
+let rightParam;
 
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
     if (button.innerHTML === "AC") {
       display = "";
-      temp = undefined;
+      leftParam = undefined;
       option = undefined;
-      temp2 = undefined;
+      rightParam = undefined;
       displayInput.value = display;
     } else if (button.innerHTML === "DEL") {
       const displayValue = displayInput.value;
@@ -33,71 +33,72 @@ buttons.forEach((button) => {
     } else {
       if (button.innerHTML === "/") {
         if (option) {
-          display = eval(temp + option + temp2);
+          display = eval(leftParam + option + rightParam);
           displayInput.value = display;
-          temp = display;
-          temp2 = 0;
+          leftParam = display;
+          rightParam = 0;
           option = undefined;
         }
         displayInput.value += button.innerText;
         const divide = displayInput.value.split("/");
         option = "/";
-        temp = divide[0];
+        leftParam = divide[0];
       } else if (button.innerHTML === "x") {
         if (option) {
-          display = eval(temp + option + temp2);
+          display = eval(leftParam + option + rightParam);
           displayInput.value = display;
-          temp = display;
-          temp2 = 0;
+          leftParam = display;
+          rightParam = 0;
           option = undefined;
         }
         displayInput.value += button.innerText;
         const multiply = displayInput.value.split("x");
         option = "*";
-        temp = multiply[0];
+        leftParam = multiply[0];
       } else if (button.innerHTML === "+") {
         if (option) {
-          display = eval(temp + option + temp2);
+          display = eval(leftParam + option + rightParam);
           displayInput.value = display;
-          temp = display;
-          temp2 = 0;
+          leftParam = display;
+          rightParam = 0;
           option = undefined;
         }
         displayInput.value += button.innerText;
         const add = displayInput.value.split("+");
         option = "+";
-        temp = add[0];
+        leftParam = add[0];
       } else if (button.innerHTML === "-") {
         if (option) {
-          display = eval(temp + option + temp2);
+          display = eval(leftParam + option + rightParam);
           displayInput.value = display;
-          temp = display;
-          temp2 = 0;
+          leftParam = display;
+          rightParam = 0;
           option = undefined;
         }
         displayInput.value += button.innerText;
         const subtract = displayInput.value.split("-");
         option = "-";
-        temp = subtract[0];
+        leftParam = subtract[0];
       } else if (button.innerHTML === "%") {
         if (option) {
-          display = eval(temp + option + temp2);
+          display = eval(leftParam + option + rightParam);
           displayInput.value = display;
-          temp = display;
-          temp2 = 0;
+          leftParam = display;
+          rightParam = 0;
           option = undefined;
         }
         displayInput.value += button.innerText;
         const percent = displayInput.value.split("%");
         option = "%";
-        temp = percent[0];
+        leftParam = percent[0];
       } else {
         displayInput.value += button.innerText;
-        temp2 =
+        rightParam =
           displayInput.value.split("/")[1] ||
           displayInput.value.split("x")[1] ||
           displayInput.value.split("+")[1] ||
-          displayInput.value.split("-")[1];
+          displayInput.value.split("-")[1] ||
+          displayInput.value.split("%")[1];
       }
     }
   });
